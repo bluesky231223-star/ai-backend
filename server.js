@@ -13,7 +13,9 @@ app.use(express.json());
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
-const GOOGLE_SCRIPT_URL = process.env.GOOGLE_SCRIPT_URL || "";
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
+
+const GOOGLE_SCRIPT_URL ="https://script.google.com/macros/s/AKfycbzzN_7aVDNwUt2SvXAHqmnn0nBZUUothJ4iwpKckuKXC6R_sKgb1ca5BxvV1QXZjeoT/exec";
 
 const CONTACT_FORM_LINK = "https://algebraindia.com/contactus";
 
@@ -41,24 +43,24 @@ function detectPhone(text){
 /* SAVE TO GOOGLE SHEETS */
 /* ============================= */
 
-async function saveToSheet(user,bot,session,email,phone,ip){
+async function saveToSheet(user,bot,session,email="",phone="",ip=""){
 
-    if(!GOOGLE_SCRIPT_URL) return;
+if(!GOOGLE_SCRIPT_URL) return;
 
-    const payload={
-        user,
-        bot,
-        session,
-        email,
-        phone,
-        ip
-    }
+const payload={
+user,
+bot,
+session,
+email,
+phone,
+ip
+};
 
-    try{
-        await axios.post(GOOGLE_SCRIPT_URL,payload)
-    }catch(e){
-        console.log("Google sheet logging failed")
-    }
+try{
+await axios.post(GOOGLE_SCRIPT_URL,payload);
+}catch(e){
+console.log("Google sheet logging failed");
+}
 
 }
 

@@ -11,7 +11,7 @@ app.use(express.json());
 /* CONFIG */
 /* ============================= */
 
-const OPENROUTER_API_KEY = process.env.YOUR_OPENROUTER_KEY;
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
 const GOOGLE_SCRIPT_URL = process.env.GOOGLE_SCRIPT_URL || "";
 
@@ -125,11 +125,10 @@ ${CONTACT_FORM_LINK}
             },
             {
                 headers:{
-                 "Authorization":`Bearer ${OPENROUTER_API_KEY}`,
-                 "HTTP-Referer":"https://algebraindia.com",
-                 "X-Title":"Nyra AI",
-                 "Content-Type":"application/json"
-            }
+                    "Authorization":`Bearer ${OPENROUTER_API_KEY}`,
+                    "HTTP-Referer":"https://algebraindia.com",
+                    "X-Title":"Nyra AI",
+                    "Content-Type":"application/json"
                 }
             }
         )
@@ -158,5 +157,5 @@ const PORT = process.env.PORT || 3000;
 
 app.listen(PORT,()=>{
     console.log(`Nyra AI Server running on port ${PORT}`);
-    console.log("API KEY LOADED:", process.env.OPENROUTER_API_KEY ? "YES" : "NO");
+    console.log("API KEY LOADED:", OPENROUTER_API_KEY ? "YES" : "NO");
 });

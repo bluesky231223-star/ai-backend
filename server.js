@@ -13,8 +13,6 @@ app.use(express.json());
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
-const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
-
 const GOOGLE_SCRIPT_URL ="https://script.google.com/macros/s/AKfycbzzN_7aVDNwUt2SvXAHqmnn0nBZUUothJ4iwpKckuKXC6R_sKgb1ca5BxvV1QXZjeoT/exec";
 
 const CONTACT_FORM_LINK = "https://algebraindia.com/contactus";

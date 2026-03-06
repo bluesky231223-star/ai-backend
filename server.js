@@ -97,7 +97,7 @@ app.post("/chat",async(req,res)=>{
         const phone = detectPhone(message);
 
         const systemPrompt = `
-You are Nyra, the official consultant of Algebraa Business Solutions Pvt Ltd.
+You are Assistante, the official consultant of Algebraa Business Solutions Pvt Ltd.
 
 Speak like a professional business consultant.
 

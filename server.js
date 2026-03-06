@@ -11,7 +11,7 @@ app.use(express.json());
 /* CONFIG */
 /* ============================= */
 
-const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
+const OPENROUTER_API_KEY = process.env.YOUR_OPENROUTER_KEY;
 
 const GOOGLE_SCRIPT_URL = process.env.GOOGLE_SCRIPT_URL || "";
 

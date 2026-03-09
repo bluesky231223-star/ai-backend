@@ -43,25 +43,22 @@ async function downloadVectors() {
 
     console.log("Downloading vectors.json...");
 
-    const file = fs.createWriteStream(VECTOR_FILE);
+    const writer = fs.createWriteStream(VECTOR_FILE);
+
+    const response = await axios({
+        url: "https://drive.google.com/uc?export=download&id=18WzlfjZAcD7MUHh2hYmYc39WcW_CaDQd&confirm=t",
+        method: "GET",
+        responseType: "stream"
+    });
+
+    response.data.pipe(writer);
 
     await new Promise((resolve, reject) => {
-        https.get(VECTOR_URL, (response) => {
-
-    if (response.statusCode === 302 && response.headers.location) {
-        https.get(response.headers.location, res => res.pipe(file));
-        return;
-    }
-            response.pipe(file);
-
-            file.on("finish", () => {
-                file.close();
-                console.log("vectors.json downloaded");
-                resolve();
-            });
-
-        }).on("error", reject);
+        writer.on("finish", resolve);
+        writer.on("error", reject);
     });
+
+    console.log("vectors.json downloaded");
 
 }
 

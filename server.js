@@ -217,4 +217,8 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT,()=>{
     console.log(`Nyra AI Server running on port ${PORT}`);
     console.log("API KEY LOADED:", OPENROUTER_API_KEY ? "YES" : "NO");
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> 96d210834366d341c6365d8450b96d5d09f33f5d

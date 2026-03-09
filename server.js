@@ -1,6 +1,9 @@
 import express from "express";
 import cors from "cors";
 import axios from "axios";
+import fs from "fs";
+import https from "https";
+import path from "path";
 
 const app = express();
 
@@ -16,6 +19,94 @@ const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 const GOOGLE_SCRIPT_URL ="https://script.google.com/macros/s/AKfycbzzN_7aVDNwUt2SvXAHqmnn0nBZUUothJ4iwpKckuKXC6R_sKgb1ca5BxvV1QXZjeoT/exec";
 
 const CONTACT_FORM_LINK = "https://algebraindia.com/contactus";
+
+
+/* ============================= */
+/* VECTOR KNOWLEDGE SETUP */
+/* ============================= */
+
+const DATA_DIR = "./data";
+const VECTOR_FILE = path.join(DATA_DIR, "vectors.json");
+
+const VECTOR_URL = "https://drive.google.com/uc?export=download&id=18WzlfjZAcD7MUHh2hYmYc39WcW_CaDQd";
+
+async function downloadVectors() {
+
+    if (!fs.existsSync(DATA_DIR)) {
+        fs.mkdirSync(DATA_DIR);
+    }
+
+    if (fs.existsSync(VECTOR_FILE)) {
+        console.log("vectors.json already exists");
+        return;
+    }
+
+    console.log("Downloading vectors.json...");
+
+    const file = fs.createWriteStream(VECTOR_FILE);
+
+    await new Promise((resolve, reject) => {
+        https.get(VECTOR_URL, (response) => {
+
+    if (response.statusCode === 302 && response.headers.location) {
+        https.get(response.headers.location, res => res.pipe(file));
+        return;
+    }
+            response.pipe(file);
+
+            file.on("finish", () => {
+                file.close();
+                console.log("vectors.json downloaded");
+                resolve();
+            });
+
+        }).on("error", reject);
+    });
+
+}
+
+let vectors = [];
+
+function cosineSimilarity(a, b) {
+    let dot = 0;
+    let normA = 0;
+    let normB = 0;
+
+    for (let i = 0; i < a.length; i++) {
+        dot += a[i] * b[i];
+        normA += a[i] * a[i];
+        normB += b[i] * b[i];
+    }
+
+    return dot / (Math.sqrt(normA) * Math.sqrt(normB));
+}
+
+/* SEARCH KNOWLEDGE */
+function searchKnowledge(queryEmbedding){
+
+    if(!vectors.length) return "";
+
+    const results = vectors.map(v => ({
+        text: v.text,
+        score: cosineSimilarity(queryEmbedding, v.embedding)
+    }));
+
+    results.sort((a,b)=>b.score-a.score);
+
+    return results.slice(0,3).map(r=>r.text).join("\n");
+}
+
+async function loadVectors(){
+
+    await downloadVectors();
+
+    const raw = fs.readFileSync(VECTOR_FILE,"utf8");
+
+vectors = JSON.parse(raw || "[]");
+
+    console.log("Vectors loaded:", vectors.length);
+
+}
 
 /* ============================= */
 /* SESSION STORAGE */
@@ -173,14 +264,42 @@ If a user needs detailed help, guide them to this page:
 ${CONTACT_FORM_LINK}
 `;
 
+
+         
+                // CREATE EMBEDDING
+        const embed = await axios.post(
+        "https://openrouter.ai/api/v1/embeddings",
+        {
+        model:"text-embedding-3-small",
+        input:message
+        },
+        {
+        headers:{
+        "Authorization":`Bearer ${OPENROUTER_API_KEY}`,
+        "Content-Type":"application/json"
+        }
+        }
+        );
+        
+        const userEmbedding = embed?.data?.data?.[0]?.embedding || [];
+        
+        // SEARCH KNOWLEDGE
+        const knowledge = searchKnowledge(userEmbedding); 
+        
         const response = await axios.post(
             "https://openrouter.ai/api/v1/chat/completions",
             {
                 model:"deepseek/deepseek-chat",
-                messages:[
-                    {role:"system",content:systemPrompt},
-                    {role:"user",content:message}
-                ]
+              messages:[
+                    {
+                    role:"system",
+                    content: systemPrompt + "\n\nRelevant company knowledge:\n" + knowledge
+                    },
+                    {
+                    role:"user",
+                    content:message
+                    }
+                    ]
             },
             {
                 headers:{
@@ -214,11 +333,15 @@ ${CONTACT_FORM_LINK}
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT,()=>{
-    console.log(`Nyra AI Server running on port ${PORT}`);
-    console.log("API KEY LOADED:", OPENROUTER_API_KEY ? "YES" : "NO");
-<<<<<<< HEAD
-});
-=======
-});
->>>>>>> 96d210834366d341c6365d8450b96d5d09f33f5d
+async function startServer(){
+
+    await loadVectors();
+
+    app.listen(PORT,()=>{
+        console.log(`Nyra AI Server running on port ${PORT}`);
+        console.log("API KEY LOADED:", OPENROUTER_API_KEY ? "YES" : "NO");
+    });
+
+}
+
+startServer();

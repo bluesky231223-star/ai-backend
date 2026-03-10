@@ -283,20 +283,23 @@ ${CONTACT_FORM_LINK}
         const knowledge = searchKnowledge(userEmbedding); 
         
         const response = await axios.post(
-            "https://openrouter.ai/api/v1/chat/completions",
+    "https://openrouter.ai/api/v1/chat/completions",
+    {
+        model:"deepseek/deepseek-chat",
+        max_tokens: 2000,
+        temperature: 0.7,
+        top_p: 0.9,
+        messages:[
             {
-                model:"deepseek/deepseek-chat",
-              messages:[
-                    {
-                    role:"system",
-                    content: systemPrompt + "\n\nRelevant company knowledge:\n" + knowledge
-                    },
-                    {
-                    role:"user",
-                    content:message
-                    }
-                    ]
+            role:"system",
+            content: systemPrompt + "\n\nRelevant company knowledge:\n" + knowledge
             },
+            {
+            role:"user",
+            content:message
+            }
+        ]
+    },
             {
                 headers:{
                     "Authorization":`Bearer ${OPENROUTER_API_KEY}`,

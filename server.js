@@ -37,8 +37,7 @@ async function downloadVectors() {
     }
 
     if (fs.existsSync(VECTOR_FILE)) {
-        console.log("vectors.json already exists");
-        return;
+        fs.unlinkSync(VECTOR_FILE);
     }
 
     console.log("Downloading vectors.json...");
@@ -46,7 +45,7 @@ async function downloadVectors() {
     const writer = fs.createWriteStream(VECTOR_FILE);
 
     const response = await axios({
-        url: "https://drive.google.com/uc?export=download&id=18WzlfjZAcD7MUHh2hYmYc39WcW_CaDQd&confirm=t",
+        url: VECTOR_URL,
         method: "GET",
         responseType: "stream"
     });

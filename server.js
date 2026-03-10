@@ -28,7 +28,7 @@ const CONTACT_FORM_LINK = "https://algebraindia.com/contactus";
 const DATA_DIR = "./data";
 const VECTOR_FILE = path.join(DATA_DIR, "vectors.json");
 
-const VECTOR_URL = "https://drive.google.com/uc?export=download&id=18WzlfjZAcD7MUHh2hYmYc39WcW_CaDQd";
+const VECTOR_URL = "https://github.com/bluesky231223-star/nyra-knowledge/releases/download/v1/vectors.json";
 
 async function downloadVectors() {
 

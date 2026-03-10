@@ -281,6 +281,7 @@ ${CONTACT_FORM_LINK}
         
         // SEARCH KNOWLEDGE
         const knowledge = searchKnowledge(userEmbedding); 
+        console.log("Knowledge used:", knowledge);
         
         const response = await axios.post(
     "https://openrouter.ai/api/v1/chat/completions",

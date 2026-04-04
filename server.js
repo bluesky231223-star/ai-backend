@@ -239,8 +239,10 @@ If user asks contact details respond like this:
 
 You can reach Algebraa Business Solutions here:
 
-🟢 WhatsApp 
-<a href="tel:+919442228766" style="color:#2b7cff;">+91-9442228766</a>
+🟢 WhatsApp:
+    <a href="https://wa.me/919442228766" target="_blank" style="color:#25D366; text-decoration:none;">
+        +91-9442228766
+    </a>
 
 📧 Email  
 <a href="mailto:sales@algebraindia.com" style="color:#2b7cff;">sales@algebraindia.com</a>

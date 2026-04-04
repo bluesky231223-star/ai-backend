@@ -244,8 +244,11 @@ You can reach Algebraa Business Solutions here:
         +91-9442228766
     </a>
 
-📧 Email  
-<a href="mailto:sales@algebraindia.com" style="color:#2b7cff;">sales@algebraindia.com</a>
+📧 Email 
+<a href="mailto:sales@algebraindia.com?subject=Inquiry&body=Hello%20I%20need%20more%20details" 
+   style="color:#2b7cff; font-weight:bold; text-decoration:none;">
+    sales@algebraindia.com
+</a>
 
 🌐 Website  
 <a href="https://algebraindia.com/contactus" target="_blank" style="color:#2b7cff;">Submit Your Requirement</a>

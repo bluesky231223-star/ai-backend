@@ -239,19 +239,31 @@ If user asks contact details respond like this:
 
 You can reach Algebraa Business Solutions here:
 
-🟢 WhatsApp:
-    <a href="https://wa.me/919442228766" target="_blank" style="color:#25D366; text-decoration:none;">
-        +91-9442228766
-    </a>
+<div style="line-height:1.8; font-size:14px;">
 
-📧 Email 
-<a href="mailto:sales@algebraindia.com?subject=Inquiry&body=Hello%20I%20need%20more%20details" 
-   style="color:#2b7cff; font-weight:bold; text-decoration:none;">
-    sales@algebraindia.com
+🟢 <strong>WhatsApp:</strong> 
+<a href="https://wa.me/919442228766" target="_blank"
+   style="color:#25D366; text-decoration:none;">
+   +91-9442228766
 </a>
 
-🌐 Website  
-<a href="https://algebraindia.com/contactus" target="_blank" style="color:#2b7cff;">Submit Your Requirement</a>
+<br>
+
+📧 <strong>Email:</strong> 
+<a href="#" 
+   onclick="window.location.href='mailto:sales@algebraindia.com?subject=Inquiry&body=Hello%20I%20need%20more%20details'"
+   style="color:#2b7cff; text-decoration:none;">
+   sales@algebraindia.com
+</a>
+
+<br>
+
+🌐 <strong>Website:</strong>  
+<a href="https://algebraindia.com/contactus" target="_blank" style="color:#2b7cff;">
+    Submit Your Requirement
+</a>
+
+</div>
 
 --------------------------------
 IMPORTANT
